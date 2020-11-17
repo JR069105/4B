@@ -1,0 +1,54 @@
+import pygame
+from pygame.locals import *
+
+#screen size
+screenx = 800
+screeny = 600
+
+#image size
+imgsizex = 125
+imgsizey = 150
+
+#image coordinates
+imgy = screeny/2 - imgsizey/2
+imgx = screenx/2 - imgsizey/2
+
+#Initializing
+Clock = pygame.time.Clock()
+FPS = 30
+speed = 20
+screen = pygame.display.set_mode((screenx, screeny), 0, 32)
+pygame.display.set_caption("Pygame_1-3")
+img = pygame.transform.scale(pygame.image.load("p1_BOI.png"), (imgsizex, imgsizey))
+
+while True:
+  for event in pygame.event.get():
+      if event.type==QUIT:
+            pygame.quit()
+            sys.exit()
+  keys_pressed = pygame.key.get_pressed()
+  if keys_pressed[pygame.K_LEFT]:
+    imgx -= speed
+  if imgx < 0:
+    imgx = imgx+speed
+    
+  if keys_pressed[pygame.K_RIGHT]:
+    imgx += speed
+  if imgx+imgsizex > screenx:
+    imgx = imgx-speed
+
+  if keys_pressed[pygame.K_DOWN]:
+    imgy+=speed
+  if imgy+imgsizey > screeny:
+    imgy-=speed
+    
+  if keys_pressed[pygame.K_UP]:
+    imgy-=speed
+  if imgy < 0:
+    imgy+=speed
+    
+  screen.fill((0, 0, 0))  
+  screen.blit(img, (imgx, imgy)) 
+  pygame.display.update()
+  pygame.display.flip()
+  Clock.tick(FPS)
